@@ -8,18 +8,24 @@ ENV BUNDLE_BIN=${BUNDLE_PATH}/bin
 ENV GEM_HOME=${BUNDLE_PATH}
 ENV PATH="${BUNDLE_BIN}:${PATH}"
 
-ENV PACKAGES curl bash
-
-RUN apk update && \
-    apk upgrade && \
-    apk add $PACKAGES && \
-    rm -rf /var/cache/apk/*
-
 RUN mkdir -p $APP_DIR $BUNDLE_PATH
 WORKDIR $APP_DIR
 
 COPY Gemfile Gemfile.lock $APP_DIR/
-RUN bundle install
+
+ENV BUILD_PACKAGES="build-base ruby-dev postgresql-dev"
+ENV APP_PACKAGES="bash curl postgresql-client"
+
+RUN apk --update upgrade && \
+    apk add \
+      --virtual app \
+      $APP_PACKAGES && \
+    apk add \
+      --virtual build_deps \
+      $BUILD_PACKAGES && \
+    bundle install && \
+    apk del build_deps && \
+    rm -rf /var/cache/apk/*
 
 COPY . $APP_DIR/
 

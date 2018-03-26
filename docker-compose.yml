@@ -1,0 +1,34 @@
+# For bringing up a development runtime with docker
+# docker-compose build
+# docker-compose up # for everything
+# docker-compose up -d postgres # start only postgres in background
+# docker-compose up app # start only app server in foreground
+
+version: '3'
+
+services:
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      APP_ENV: 'development'
+      APP_PORT: '4567'
+      DB_HOST: 'postgres'
+      DB_PORT: '5432'
+      DB_USER: 'postgres'
+      DB_PASS: ''
+    ports:
+      - 4567:4567
+    volumes:
+      - bundle_cache:/srv/bundler
+      - .:/srv/app
+    links:
+      - postgres
+
+  postgres:
+    image: postgres:9.6
+
+volumes:
+  bundle_cache:
