@@ -1,5 +1,6 @@
 # For bringing up a development runtime with docker
-# docker-compose build
+#
+# docker-compose build # build everything
 # docker-compose up # for everything
 # docker-compose up -d postgres # start only postgres in background
 # docker-compose up app # start only app server in foreground
