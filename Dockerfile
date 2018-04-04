@@ -1,17 +1,17 @@
 FROM ruby:2.5-alpine
 MAINTAINER Matt Conway <matt@simplygenius.com>
 
-ENV APP_PORT 4567
-ENV APP_DIR /srv/app
+ENV SVC_PORT 4567
+ENV SVC_DIR /srv/app
 ENV BUNDLE_PATH /srv/bundler
 ENV BUNDLE_BIN=${BUNDLE_PATH}/bin
 ENV GEM_HOME=${BUNDLE_PATH}
-ENV PATH="${APP_DIR}:${BUNDLE_BIN}:${PATH}"
+ENV PATH="${SVC_DIR}:${BUNDLE_BIN}:${PATH}"
 
-RUN mkdir -p $APP_DIR $BUNDLE_PATH
-WORKDIR $APP_DIR
+RUN mkdir -p $SVC_DIR $BUNDLE_PATH
+WORKDIR $SVC_DIR
 
-COPY Gemfile Gemfile.lock $APP_DIR/
+COPY Gemfile Gemfile.lock $SVC_DIR/
 
 ENV BUILD_PACKAGES="build-base ruby-dev postgresql-dev"
 ENV APP_PACKAGES="bash curl postgresql-client"
@@ -32,7 +32,7 @@ RUN apk --update upgrade && \
     apk del build_deps && \
     rm -rf /var/cache/apk/*
 
-COPY . $APP_DIR/
+COPY . $SVC_DIR/
 
 ENTRYPOINT ["docker-entrypoint.sh"]
-CMD exec bundle exec ruby server.rb -o 0.0.0.0 -p $APP_PORT
+CMD exec bundle exec ruby server.rb -o 0.0.0.0 -p $SVC_PORT

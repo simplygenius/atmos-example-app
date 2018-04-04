@@ -14,10 +14,12 @@ services:
       context: .
       dockerfile: Dockerfile
     environment:
-      APP_ENV: 'development'
-      APP_PORT: '4567'
+      ATMOS_ENV: 'development'
+      SVC_NAME: 'hello'
+      SVC_PORT: '4567'
       DB_HOST: 'postgres'
       DB_PORT: '5432'
+      DB_NAME: 'postgres'
       DB_USER: 'postgres'
       DB_PASS: ''
     ports:
