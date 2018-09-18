@@ -31,5 +31,5 @@ get '/' do
     end
   end
 
-  "Hello World svc_name=#{ENV['SVC_NAME']}, db_counter=#{count}!\n"
+  "Hello World atmos_env=#{ENV['ATMOS_ENV']} svc_name=#{ENV['SVC_NAME']}, db_counter=#{count}!\n"
 end
