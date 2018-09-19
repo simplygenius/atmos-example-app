@@ -11,7 +11,7 @@ ENV PATH="${SVC_DIR}:${BUNDLE_BIN}:${PATH}"
 RUN mkdir -p $SVC_DIR $BUNDLE_PATH
 WORKDIR $SVC_DIR
 
-COPY Gemfile Gemfile.lock $SVC_DIR/
+COPY Gemfile* $SVC_DIR/
 
 ENV BUILD_PACKAGES="build-base ruby-dev postgresql-dev"
 ENV APP_PACKAGES="bash curl postgresql-client"
