@@ -15,8 +15,8 @@ if [[ -n "$ATMOS_SECRET_BUCKET" && -n "$ATMOS_SECRET_KEYS" ]]; then
     if [[ $name == $s3_key ]]; then
       name=${name^^}
     fi
-    value=$(aws s3 cp s3://$ATMOS_SECRET_BUCKET/$s3_key -)
-    declare -x "$name=$value"
+    value=$(aws s3 cp s3://$ATMOS_SECRET_BUCKET/$s3_key - )
+    declare -gx "$name=$value"
   done
 
 fi
